@@ -1,17 +1,13 @@
 #!/usr/bin/env python3
 
 import argparse
-import json
 import logging
 import os
 import pathlib
-import random
 import sys
 
 from groupGenerator import GroupGenerator
 
-# GROUPFILE = pathlib.Path(f'{os.getcwd()}/groupDistrib.json')
-PID = os.getpid()
 LOGFILE = pathlib.Path(f'{os.getcwd()}/logs.log')
 
 try:
@@ -22,34 +18,8 @@ try:
 except PermissionError as err:
     print(f'Failed to init logger : {err}', file=sys.stderr)
 
-# def getNamesFromFile(filename) -> list:
-#     names = []
-#     with open(filename, 'r') as f:
-#         for line in f:
-#             names.append(line.strip(" \n"))
-#     return names
-
-# def createGroups(names, nbByGroup) -> dict:
-#     groupDistrib = {}
-#     groupNumber = 1
-#     while names:
-#         currentGroup = []
-#         for _ in range(nbByGroup):
-#             if not names:
-#                 break
-#             choice = random.choice(names)
-#             currentGroup.append(choice)
-#             names.remove(choice)
-#         groupDistrib[groupNumber] = currentGroup
-#         groupNumber += 1
-#     return groupDistrib
-
-# def saveDistributionGroup(groups: dict):
-#     with open(GROUPFILE, 'w') as f:
-#         json.dump(groups, f, indent=4)
-#         logging.info(f'{PID}: Saved groups distribution in {GROUPFILE}')
-
 def getArgs():
+    logging.info(f'{os.getpid()}: Start parsing arguments')
     parser = argparse.ArgumentParser('Group generator')
     parser.add_argument('--students-file',
                         type=pathlib.Path,
@@ -66,17 +36,17 @@ def getArgs():
                         action='store',
                         required=True,
                         help='Name of the file where randomly generated groups are stored')
+    logging.info(f'{os.getpid()}: Argument parsing succeded')
     return parser.parse_args()
 
 
 def main():
-    logging.info(f'{PID}: Script started')
-
+    pid = os.getpid()
+    logging.info(f'{pid}: Script started')
     args = getArgs()
-
-    groupGenerator = GroupGenerator(args.students_file, args.group_size, args.groups_file)
+    groupGenerator = GroupGenerator(args.students_file, args.group_size, args.groups_file, pid)
     groupGenerator.run()
-    logging.info(f'{PID}: Script ended successfully')
+    logging.info(f'{pid}: Script ended successfully')
 
 
 if __name__ == '__main__':
