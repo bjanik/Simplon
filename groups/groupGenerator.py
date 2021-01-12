@@ -11,19 +11,19 @@ class GroupGenerator:
     Takes as input a file with students' names and
     an integer indicating number of students per group'''
     
-    def __init__(self, studentsFile: pathlib.Path, n: int, groupsFile: pathlib.Path, pid: int):
+    def __init__(self, input: pathlib.Path, size: int, output: pathlib.Path, pid: int):
         self._pid = pid  # PID will be used for logs
-        self._studentsFile = pathlib.Path(f'{os.getcwd()}/{studentsFile}')
-        self._studentsByGroup = n
-        self._groupsFile = pathlib.Path(f'{os.getcwd()}/{groupsFile}')
+        self._input = pathlib.Path(f'{os.getcwd()}/{input}')
+        self._output = pathlib.Path(f'{os.getcwd()}/{output}')
+        self._studentsByGroup = size
         self._studentsList = [] # Will store list of names after reading studentsFile
         self._groupDistribution = {}
 
     def _getStudentsList(self):
-        with open(self._studentsFile, 'r') as f:
+        with open(self._input, 'r') as f:
             for line in f:
                 self._studentsList.append(line.strip(" \n"))
-        logging.info(f'{self._pid}: Successfully retrieved students names from {self._studentsFile}')
+        logging.info(f'{self._pid}: Successfully retrieved students names from {self._input}')
 
     def _createGroups(self):
         groupNumber = 1
@@ -39,9 +39,9 @@ class GroupGenerator:
             groupNumber += 1
 
     def _saveDistributionGroup(self):
-        with open(self._groupsFile, 'w') as f:
+        with open(self._output, 'w') as f:
             json.dump(self._groupDistribution, f, indent=4)
-        logging.info(f'{self._pid}: Storing randomly created groups in {self._groupsFile} succeded')
+        logging.info(f'{self._pid}: Storing randomly created groups in {self._output} succeded')
 
 
     def run(self):

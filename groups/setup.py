@@ -2,8 +2,8 @@ from setuptools import setup
 
 setup(
     name='groupGenerator',
-    entrypoints={
-        'console-scripts': [
+    entry_points={
+        'console_scripts': [
             'group-generator = groups:main'
         ]
     }
