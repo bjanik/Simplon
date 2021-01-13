@@ -44,6 +44,9 @@ def main():
     pid = os.getpid()
     logging.info(f'{pid}: Script started')
     args = getArgs()
+    if args.size < 1:
+        logging.warn(f'{pid}: Group size must be at least 1. Exiting script...')
+        sys.exit(1)
     groupGenerator = GroupGenerator(args.input, args.size, args.output, pid)
     groupGenerator.run()
     logging.info(f'{pid}: Script ended successfully')

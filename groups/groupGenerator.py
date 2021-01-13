@@ -28,14 +28,13 @@ class GroupGenerator:
     def _createGroups(self):
         groupNumber = 1
         while self._studentsList:
-            currentGroup = []
+            self._groupDistribution[groupNumber] = []
             for _ in range(self._studentsByGroup):
                 if not self._studentsList:
                     break
                 choice = random.choice(self._studentsList)
-                currentGroup.append(choice)
+                self._groupDistribution[groupNumber].append(choice)
                 self._studentsList.remove(choice)
-            self._groupDistribution[groupNumber] = currentGroup
             groupNumber += 1
 
     def _saveDistributionGroup(self):
