@@ -5,6 +5,7 @@ DATA = [
         "artist": "Metallica",
         "song": "media/master-of-puppets-remastered.mp3",
         "cover": "img/master-of-puppets.webp",
+        "duration": "8:35",
         "year": 1986,
     },
     {
@@ -12,6 +13,7 @@ DATA = [
         "artist": "Rage Against The Machine",
         "song": "media/killing-in-the-name.mp3",
         "cover": "img/ratm.jpg",
+        "duration": "5:14",
         "year": 1992,
     },
     {
@@ -19,6 +21,7 @@ DATA = [
         "artist": "Nico",
         "song": "media/in-vino-veritas.mp3",
         "cover": "img/nico.jpg",
+        "duration": "3:23",
         "year": 2020,
     },
     {
@@ -26,6 +29,7 @@ DATA = [
         "artist": "Nirvana",
         "song": "media/smells-like-teen-spirit.mp3",
         "cover": "img/nevermind.jpg",
+        "duration": "4:39",
         "year": 1991,
     },
     {
@@ -33,6 +37,7 @@ DATA = [
         "artist": "Linkin Park",
         "song": "media/in-the-end.mp3",
         "cover": "img/hybrid-theory.jpg",
+        "duration": "3:39",
         "year": 2000,
     },
     {
@@ -40,6 +45,7 @@ DATA = [
         "artist": "The Luniz",
         "song": "media/i-got-5-on-it.mp3",
         "cover": "img/operation-stackola.jpg",
+        "duration": "4:17",
         "year": 1995,
     },
     {
@@ -47,6 +53,7 @@ DATA = [
         "artist": "Suicidal Tendencies",
         "song": "media/you-cant-bring-me-down.mp3",
         "cover": "img/lcr.jpg",
+        "duration": "5:46",
         "year": 1992,
     },
     {
@@ -54,6 +61,7 @@ DATA = [
         "artist": "Bob Marley & The Wailers",
         "song": "media/jammin.mp3",
         "cover": "img/exodus.jpg",
+        "duration": "3:21",
         "year": 1977,
     },
     {
@@ -61,6 +69,7 @@ DATA = [
         "artist": "The Offspring",
         "song": "media/the-kids-arent-alright.mp3",
         "cover": "img/americana.jpeg",
+        "duration": "3:00",
         "year": 1998,
     },
     {
@@ -68,6 +77,7 @@ DATA = [
         "artist": "System Of A Down",
         "song": "media/chop-suey.mp3",
         "cover": "img/toxicity.jpg",
+        "duration": "3:27",
         "year": 2001,
     },
     {
@@ -75,6 +85,7 @@ DATA = [
         "artist": "Tiesto",
         "song": "media/adagio-for-strings.mp3",
         "cover": "img/adagio.jpg",
+        "duration": "7:24",
         "year": 2004,
     }
 ]
@@ -105,9 +116,13 @@ const generateTable = () => {
             return td
         },
         (td, index) => {
-            td.innerHTML = DATA[index].year
+            td.innerHTML = DATA[index].duration
             return td
         },
+        (td, index) => {
+            td.innerHTML = DATA[index].year
+            return td
+        }
     ]
 
     for (let i = 0; i < Object.keys(DATA).length; i++) {
