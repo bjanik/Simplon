@@ -28,12 +28,29 @@ header {
     height: auto;
 }
 
+.container {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+button {
+    border-radius: 4px;
+    width: 75px;
+    background-color: lightgrey;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: black;
+    color: white;
+}
+
 table {
     align-items: center;
     margin-top: 100px;
     margin-left: auto;
     margin-right: auto;
-    border-collapse: collapse;
     width: 80%;
 }
 
@@ -45,11 +62,6 @@ table tr:nth-of-type(2n) {
     background-color: rgb(10, 10, 10, 0.5);
 }
 
-button {
-    border-radius: 2px;
-    background-color: lightgrey;
-    cursor: pointer;
-}
 
 td, th {
     padding: 8px;
