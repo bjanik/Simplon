@@ -1,4 +1,5 @@
 const BUTTONS = document.getElementsByClassName('button')
+const SONGS = document.getElementsByClassName('song')
 
 COVERS = {
     1: "img/master-of-puppets.webp",
@@ -13,23 +14,46 @@ COVERS = {
     10: "img/toxicity.jpg",
 }
 
-IS_PLAYING = false
-CURRENTLY_PLAYING = null
+CURRENT = null
 
-for (let i = 0; i < buttons.length; i++) {
-    buttons[i].addEventListener('click', () => {
+const resetSong = song => {
+    song.currentTime = 0
+    song.pause()
+    song.nextElementSibling.innerHTML = "Play"
+}
+
+for (let i = 0; i < BUTTONS.length; i++) {
+    let button = BUTTONS[i]
+    button.addEventListener('click', () => {
+
         let song = document.getElementById('song' + (i + 1))
-        if (ISPLAYING === false && BUTTONS[i].innerHTML === 'Play') {
-            ISPLAYING = true
+
+        if (button.innerHTML === 'Play') {
+            if (button != CURRENT && CURRENT) {
+                resetSong(CURRENT.previousElementSibling)
+            }
+            CURRENT = button
             cover = document.getElementById('cover')
             cover.src = COVERS[i + 1]
-            BUTTONS[i].innerHTML = 'Pause'
+            button.innerHTML = 'Pause'
             song.play()
         }
-        else if (ISPLAYING === true && BUTTONS[i].innerHTML === 'Pause') {
-            ISPLAYING = false
-            BUTTONS[i].innerHTML = 'Play'    
+        else if (button.innerHTML === 'Pause') {
+            button.innerHTML = 'Play'
             song.pause()
         }
+    })
+}
+
+for (let i = 0; i < SONGS.length; i++) {
+    SONGS[i].addEventListener("ended", () => {
+        resetSong(SONGS[i])
+
+        const click = new Event('click')
+        let index = i + 1
+        if (index === SONGS.length) {
+            index = 0
+        }
+        BUTTONS[index].dispatchEvent(click)
     })
 }
