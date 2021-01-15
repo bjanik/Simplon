@@ -11,6 +11,8 @@ from gallow import GALLOWS
 
 LOGFILE = pathlib.Path(f'{os.getcwd()}/logs.log')
 
+PID = os.getpid()
+
 URL = 'https://random-word-api.herokuapp.com/word?number=1'
 
 logging.basicConfig(filename=LOGFILE,
@@ -19,13 +21,23 @@ logging.basicConfig(filename=LOGFILE,
                         datefmt='[%Y-%m-%d %H:%M:%S]')
 
 class Hangman:
-    def __init__(self, word: str, maxTries: int = 5):
-        self._secretWord = word.lower()
+    def __init__(self, maxTries: int = 5):
+        self._secretWord = ''
         self._failures = 0
         self._maxTries = maxTries
         self._guessedLetters = []
-        self._leftLetters = len(word)
         
+    def _getRandomWord(self):
+        req = requests.get(URL)
+        if req.status_code == 200:
+            self._secretWord = req.text[2:-2]
+            self._leftLetters = len(self._secretWord)
+            logging.info(f'{PID}: Successfully retrieved random word')
+        else:
+            logging.error(f'{PID}: Failed to retrieve random word')
+            sys.exit(1)
+
+
     def _getLetterFromUser(self) -> str:
         userInput = ''
         while not userInput.isalpha or len(userInput) != 1 or userInput in self._guessedLetters:
@@ -54,6 +66,8 @@ class Hangman:
             print("You guessed the word! Congratulations!")
 
     def _run(self):
+        self._getRandomWord()
+        self._printSecretWord()
         while self._failures < self._maxTries and self._leftLetters > 0:
             letter = self._getLetterFromUser()
             self._checkLetterPresence(letter)
@@ -63,17 +77,15 @@ class Hangman:
     def run(self):
         try:
             self._run()
-        except Exception as err:
-            logging.error(err)
+        except (Exception, BaseException) as err:
+            logging.error(f'{PID}: {err}. Exiting hangman...')
             sys.exit(1)
 
 def main():
-    logging.info("Hangman started")
+    logging.info(f'{PID}: Hangman started')
     print("Welcome to the Hangman challenge!")
-    hangman = Hangman('Toto')
+    hangman = Hangman()
     hangman.run()
-    logging.info("Hangman ended")
+    logging.info(f'{PID}: Hangman ended')
 
 main()
-
-        
