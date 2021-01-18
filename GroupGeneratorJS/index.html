@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Generator</title>
+    <link rel="stylesheet" href="style.css" type='text/css'>
+</head>
+<body>
+    <header>
+        <h1>Groups Generator</h1>
+    </header>
+    <div class='container'>
+    <div class='forms'>
+        <div class='addNamesForm'>
+            <ul id="listOfNames"></ul>
+            <label for="text">Name</label>
+            <input type="text" name='Name'>
+            <button id='add'>Add</button>
+        </div>
+        <div class='nbForm'>
+            <h3>Type how many students by groups</h3>
+            <label for="text">Students per group</label>
+            <input id='nbStudents' type="text" name='nb'><br>
+            <button id='genGroups'>Generate groups</button>
+        </div>
+    </div>
+
+    <div class='groups'>
+    </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
