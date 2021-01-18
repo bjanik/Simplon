@@ -15,7 +15,7 @@ header {
     justify-content: center;
 }
 
-.container, .forms, .addNamesForm, .nbForm {
+.container {
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -31,11 +31,15 @@ input {
 }
 
 button {
-    width: 10em;
+    width: 8em;
 }
 
 button, label, li {
-    font-size: 24px;
+    font-size: 18px;
+}
+
+li {
+    list-style: none;
 }
 
 .groups {
@@ -44,3 +48,4 @@ button, label, li {
     justify-content: space-around;
 
 }
+
