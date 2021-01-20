@@ -10,25 +10,31 @@
     <header>
         <h1>Welcome to Bartify</h1>
     </header>
-    <div class='cover'>
-        <img id='cover' src=''>
+    <div id='content'>
+        <div class='cover'>
+            <img id='cover' src=''>
+        </div>
+        <div class='player'>
+            <audio src=''></audio>
+            <div class='buttons'>
+                    <button id='previous'>Previous</button>
+                    <button id='play-pause'>Play</button>
+                    <button id='next'>Next</button>
+                    <button id='random'>Random</button>
+            </div>
+        </div>
+        <table id='table'>
+            <tbody>
+                <tr>
+                    <th onclick="sortTable(0)">Title</th>
+                    <th onclick="sortTable(1)">Artist</th>
+                    <th onclick="sortTable(2)">Duration</th>
+                    <th onclick="sortTable(3)">Year</th>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        <script src="script.js" type='text/javascript'></script>
     </div>
-    <div class='container'>
-        <button id="start" class='topbutton'>Start Playlist</button>
-        <button id="random" class='topbutton'>Play random</button>
-    </div>
-    <table id='table'>
-        <tbody>
-            <tr>
-                <th></th>
-                <th onclick="sortTable(1)">Title</th>
-                <th onclick="sortTable(2)">Artist</th>
-                <th onclick="sortTable(3)">Duration</th>
-                <th onclick="sortTable(4)">Year</th>
-            </tr>
-        </tbody>
-    </table>
-    </div>
-    <script src="script.js" type='text/javascript'></script>
 </body>
 </html>

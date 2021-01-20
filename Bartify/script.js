@@ -1,4 +1,4 @@
-DATA = [
+const DATA = [
     {
         "title": "Master Of Puppets",
         "artist": "Metallica",
@@ -88,38 +88,35 @@ DATA = [
         "year": 2004,
     }
 ]
+const audio = document.querySelector('audio')
+const previous = document.querySelector('#previous')
+const playPause = document.querySelector('#play-pause')
+const next = document.querySelector('#next')
+const random = document.querySelector('#random')
+const tableBody = document.querySelector("tbody")
+const click = new Event('click')
+
+let CURRENT = null
 
 const generateTable = () => {
-
+    
     const tbody = document.getElementsByTagName('tbody')[0]
-
+    
     const funcDispatcher = [
         (td, index) => {
-            let audio = document.createElement('audio')
-            let button = document.createElement('button')
-
-            audio.src = DATA[index].song
-            audio.setAttribute("id", "song" + (index + 1))
-            button.innerHTML = "Play"
-            button.classList.add('button')
-            td.appendChild(audio)
-            td.appendChild(button)
+            td.innerText = DATA[index].title
             return td
         },
         (td, index) => {
-            td.innerHTML = DATA[index].title
+            td.innerText = DATA[index].artist
             return td
         },
         (td, index) => {
-            td.innerHTML = DATA[index].artist
+            td.innerText = DATA[index].duration
             return td
         },
         (td, index) => {
-            td.innerHTML = DATA[index].duration
-            return td
-        },
-        (td, index) => {
-            td.innerHTML = DATA[index].year
+            td.innerText = DATA[index].year
             return td
         }
     ]
@@ -127,6 +124,15 @@ const generateTable = () => {
     for (let i = 0; i < Object.keys(DATA).length; i++) {
 
         const newtr = document.createElement('tr')
+
+        newtr.addEventListener('click', () => {
+            CURRENT = newtr
+            audio.src = DATA[i].song
+            cover = document.querySelector('#cover')
+            cover.src = DATA[i].cover
+            audio.play()
+            playPause.innerText = 'Pause'
+        })
         tbody.appendChild(newtr)
 
         for (let j = 0; j < Object.keys(funcDispatcher).length; j++) {
@@ -138,86 +144,9 @@ const generateTable = () => {
     }
 }
 
-generateTable()
-
-const BUTTONS = document.getElementsByClassName('button')
-const SONGS = document.getElementsByTagName('audio')
-
-let CURRENT = null
-
-const handleStart = () => { // Simulate click on first Play button
-
-    const startButton = document.getElementById('start')
-
-    startButton.addEventListener('click', () => {
-        const click = new Event('click')
-
-        BUTTONS[0].dispatchEvent(click)
-    })
-}
-
-const handleRandom = () => { // Simulate click on random Play Button
-
-    const startButton = document.getElementById('random')
-
-    startButton.addEventListener('click', () => {
-        const click = new Event('click')
-
-        BUTTONS[Math.floor(Math.random() * Object.keys(DATA).length)].dispatchEvent(click)
-    })
-}
-
-const handlePlayPauseButtons = () => {
-
-    for (let i = 0; i < BUTTONS.length; i++) {
-        let button = BUTTONS[i]
-        button.addEventListener('click', () => {
-
-            let song = document.getElementById('song' + (i + 1))
-
-            if (button.innerHTML === 'Play') {
-                if (button != CURRENT && CURRENT) {
-                    resetSong(CURRENT.previousElementSibling)
-                }
-                CURRENT = button
-                cover = document.getElementById('cover')
-                cover.src = DATA[i].cover
-                button.innerHTML = 'Pause'
-                song.play()
-            }
-            else if (button.innerHTML === 'Pause') {
-                button.innerHTML = 'Play'
-                song.pause()
-            }
-        })
-    }
-}
-
-const resetSong = song => {
-    song.currentTime = 0
-    song.pause()
-    song.nextElementSibling.innerHTML = "Play"
-}
-
-const handleEndOfSong = () => {
-
-    for (let i = 0; i < SONGS.length; i++) {
-        SONGS[i].addEventListener("ended", () => {
-            resetSong(SONGS[i])
-
-            const click = new Event('click')
-            let index = i + 1
-            if (index === SONGS.length) {
-                index = 0
-            }
-            BUTTONS[index].dispatchEvent(click)
-        })
-    }
-}
-
 const sortTable = n => {
     let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    table = document.getElementById("table");
+    table = document.querySelector("table");
     switching = true;
     dir = "asc";
     while (switching) {
@@ -225,15 +154,15 @@ const sortTable = n => {
         rows = table.rows;
         for (i = 1; i < (rows.length - 1); i++) {
             shouldSwitch = false
-            x = rows[i].getElementsByTagName("td")[n];
-            y = rows[i + 1].getElementsByTagName("td")[n];
+            x = rows[i].querySelectorAll("td")[n];
+            y = rows[i + 1].querySelectorAll("td")[n];
             if (dir == "asc") {
-                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                if (x.innerText.toLowerCase() > y.innerText.toLowerCase()) {
                     shouldSwitch = true;
                     break;
                 }
             } else if (dir == "desc") {
-                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                if (x.innerText.toLowerCase() < y.innerText.toLowerCase()) {
                     shouldSwitch = true;
                     break;
                 }
@@ -252,10 +181,54 @@ const sortTable = n => {
     }
 }
 
+playPause.addEventListener('click', () => {
+    if (CURRENT === null) {
+        let rows = Array.from(tableBody.querySelectorAll('tr'))
+        rows[1].dispatchEvent(click)
+    }
+    else {
+        if (playPause.innerText === 'Pause') {
+            audio.pause()
+            playPause.innerText = 'Play'
+        } else {
+            audio.play()
+            playPause.innerText = 'Pause'
+        }
+    }
+})
+
+next.addEventListener('click', () => {
+    if (CURRENT) {
+        let row = CURRENT.nextElementSibling
+        if (row === null) {
+            row = tableBody.querySelectorAll('tr')[1]
+            console.log(row)
+        }
+        row.dispatchEvent(click)
+    }
+})
+
+previous.addEventListener('click', () => {
+    let row = null
+    if (CURRENT) {
+        if (CURRENT == tableBody.children[1]) {
+            row = tableBody.lastElementChild
+        }
+        else {
+            row = CURRENT.previousElementSibling
+        }
+        row.dispatchEvent(click)
+    }
+})
+
+random.addEventListener('click', () => {
+    let rows = Array.from(tableBody.querySelectorAll('tr'))
+    rows.shift()
+    rows[Math.floor(Math.random() * rows.length)].dispatchEvent(click)
+})
+
+generateTable()
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    handlePlayPauseButtons()
-    handleStart()
-    handleRandom()
-    handleEndOfSong()
+
 })

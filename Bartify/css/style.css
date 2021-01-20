@@ -18,14 +18,47 @@ header {
     color: bisque;
 }
 
+#content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
 #cover {
     display: flex;
     justify-content: center;
-    margin-top: 50px;
+    margin-top: 5em;
     margin-left: auto;
     margin-right: auto;
-    width: 15%;
+    width: 20em;
     height: auto;
+}
+
+.player {
+    display: flex;
+    justify-content: center;
+    margin-top: 5em;
+    width: 50%;
+    height: 60px;
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 2px;
+}
+
+.buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+}
+
+.progress {
+    position: absolute;
+    height: 2px;
+    left: 0;
+    top: 0;
+    background-color:white;
 }
 
 .container {
@@ -37,7 +70,7 @@ header {
 button {
     border-radius: 10px;
     width: 75px;
-    background-color: rgb(211, 211, 211, 0.5);
+    background-color: bisque;
     cursor: pointer;
 }
 
@@ -61,7 +94,6 @@ table tr th {
 table tr:nth-of-type(2n) {
     background-color: rgb(10, 10, 10, 0.5);
 }
-
 
 td, th {
     padding: 8px;
