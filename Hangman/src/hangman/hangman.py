@@ -7,7 +7,50 @@ import random
 import requests
 import sys
 
-from gallow import GALLOWS
+GALLOWS = [
+    """     +-----+-+
+     |      \|
+     |       |
+             |
+             |
+             |
+         ___/|\___""",
+
+    """     +-----+-+
+     |      \|
+     |       |
+     O       |
+             |
+             |
+         ___/|\___""",
+
+    """     +-----+-+
+     |      \|
+     |       |
+     O       |
+     |       |
+             |
+             |
+         ___/|\___""",
+
+    """     +-----+-+
+     |      \|
+     |       |
+     O       |
+    /|\      |
+             |
+             |
+         ___/|\___""",
+
+   """     +-----+-+
+     |      \|
+     |       |
+     O       |
+    /|\      |
+    / \      |
+             |
+         ___/|\___"""
+]
 
 LOGFILE = pathlib.Path(f'{os.getcwd()}/logs.log')
 
@@ -78,14 +121,14 @@ class Hangman:
         try:
             self._run()
         except (Exception, BaseException) as err:
-            logging.error(f'{PID}: {err}. Exiting hangman...')
+            logging.error(f'{PID}: {err}. Exiting Hangman...')
             sys.exit(1)
 
 def main():
     logging.info(f'{PID}: Hangman started')
     print("Welcome to the Hangman challenge!")
-    hangman = Hangman()
-    hangman.run()
+    Hangman().run()
     logging.info(f'{PID}: Hangman ended')
 
-main()
+if __name__ == '__main__':
+    main()
