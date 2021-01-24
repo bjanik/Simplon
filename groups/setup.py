@@ -4,7 +4,7 @@ setup(
     name='groupGenerator',
     entry_points={
         'console_scripts': [
-            'group-generator = groups:main'
+            'groups-generator = groups:main'
         ]
     }
 )

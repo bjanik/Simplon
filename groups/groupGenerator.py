@@ -54,4 +54,3 @@ class GroupGenerator:
         self._getStudentsList()
         self._createGroups()
         self._saveDistributionGroup()
-
