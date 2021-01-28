@@ -88,6 +88,7 @@ const DATA = [
         "year": 2004,
     }
 ]
+
 const audio = document.querySelector('audio')
 const previous = document.querySelector('#previous')
 const playPause = document.querySelector('#play-pause')
@@ -181,6 +182,21 @@ const sortTable = n => {
     }
 }
 
+const getNextRow = () => {
+    if (CURRENT) {
+        let row = CURRENT.nextElementSibling
+        if (row === null) {
+            row = tableBody.querySelectorAll('tr')[1]
+        }
+        return row
+    }
+}
+
+audio.addEventListener('ended', () => {
+    const row = getNextRow()
+    row.dispatchEvent(click)
+})
+
 playPause.addEventListener('click', () => {
     if (CURRENT === null) {
         let rows = Array.from(tableBody.querySelectorAll('tr'))
@@ -198,14 +214,8 @@ playPause.addEventListener('click', () => {
 })
 
 next.addEventListener('click', () => {
-    if (CURRENT) {
-        let row = CURRENT.nextElementSibling
-        if (row === null) {
-            row = tableBody.querySelectorAll('tr')[1]
-            console.log(row)
-        }
-        row.dispatchEvent(click)
-    }
+    const row = getNextRow()
+    row.dispatchEvent(click)
 })
 
 previous.addEventListener('click', () => {
