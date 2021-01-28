@@ -91,14 +91,11 @@ const DATA = [
 
 const audio = document.querySelector('audio')
 const previous = document.querySelector('#previous')
-const playPause = document.querySelector('#play-pause')
+const start = document.querySelector('#start')
 const next = document.querySelector('#next')
 const random = document.querySelector('#random')
 const tableBody = document.querySelector("tbody")
 const click = new Event('click')
-const body = document.querySelector("body")
-
-body.addEventListener('click', () => {console.log('Clicked on body')})
 
 let CURRENT = null
 
@@ -135,7 +132,6 @@ const generateTable = () => {
             cover = document.querySelector('#cover')
             cover.src = DATA[i].cover
             audio.play()
-            playPause.innerText = 'Pause'
         })
         tbody.appendChild(newtr)
 
@@ -203,19 +199,10 @@ audio.addEventListener('ended', () => {
     }
 })
 
-playPause.addEventListener('click', () => {
+start.addEventListener('click', () => {
     if (CURRENT === null) {
         let rows = Array.from(tableBody.querySelectorAll('tr'))
         rows[1].dispatchEvent(click)
-    }
-    else {
-        if (playPause.innerText === 'Pause') {
-            audio.pause()
-            playPause.innerText = 'Play'
-        } else {
-            audio.play()
-            playPause.innerText = 'Pause'
-        }
     }
 })
 
