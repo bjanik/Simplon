@@ -96,6 +96,9 @@ const next = document.querySelector('#next')
 const random = document.querySelector('#random')
 const tableBody = document.querySelector("tbody")
 const click = new Event('click')
+const body = document.querySelector("body")
+
+body.addEventListener('click', () => {console.log('Clicked on body')})
 
 let CURRENT = null
 
@@ -190,11 +193,14 @@ const getNextRow = () => {
         }
         return row
     }
+    return null
 }
 
 audio.addEventListener('ended', () => {
     const row = getNextRow()
-    row.dispatchEvent(click)
+    if (row) {
+        row.dispatchEvent(click)
+    }
 })
 
 playPause.addEventListener('click', () => {
@@ -215,7 +221,9 @@ playPause.addEventListener('click', () => {
 
 next.addEventListener('click', () => {
     const row = getNextRow()
-    row.dispatchEvent(click)
+    if (row) {
+        row.dispatchEvent(click)
+    }
 })
 
 previous.addEventListener('click', () => {
