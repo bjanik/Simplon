@@ -182,14 +182,25 @@ const sortTable = n => {
 }
 
 const getNextRow = () => {
+    let row = null
     if (CURRENT) {
-        let row = CURRENT.nextElementSibling
+        row = CURRENT.nextElementSibling
         if (row === null) {
             row = tableBody.querySelectorAll('tr')[1]
         }
-        return row
     }
-    return null
+    return row
+}
+
+const getPreviousRow = () => {
+    let row = null
+    if (CURRENT) {
+        row = CURRENT.previousElementSibling
+        if (row == tableBody.children[0]) {
+            row = tableBody.lastElementChild
+        }
+    }
+    return row
 }
 
 audio.addEventListener('ended', () => {
@@ -214,16 +225,8 @@ next.addEventListener('click', () => {
 })
 
 previous.addEventListener('click', () => {
-    let row = null
-    if (CURRENT) {
-        if (CURRENT == tableBody.children[1]) {
-            row = tableBody.lastElementChild
-        }
-        else {
-            row = CURRENT.previousElementSibling
-        }
-        row.dispatchEvent(click)
-    }
+    const row = getPreviousRow()
+    row.dispatchEvent(click)
 })
 
 random.addEventListener('click', () => {
@@ -232,8 +235,6 @@ random.addEventListener('click', () => {
     rows[Math.floor(Math.random() * rows.length)].dispatchEvent(click)
 })
 
-generateTable()
-
 document.addEventListener('DOMContentLoaded', (event) => {
-
+    generateTable()
 })
